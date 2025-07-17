@@ -1,0 +1,31 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Decode SSH Key
+      run: |
+        echo "${{ secrets.EC2_KEY }}" | base64 --decode > key.pem
+        chmod 400 key.pem
+
+    - name: Deploy via SSH
+      run: |
+        ssh -o StrictHostKeyChecking=no -i key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+          cd /home/ubuntu/logging
+          git pull origin main
+          docker stop log || true
+          docker rm log || true
+          docker build -t log .
+          docker run -d --restart always -p 8080:3000 --env-file .env --name log log
+        EOF
+
