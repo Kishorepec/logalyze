@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Uploaded Log Files</title>
+</head>
+<body>
+  <h1>📁 Uploaded Files</h1>
+  
+
+  <% if (files.length === 0) { %>
+    <p>No files found in the bucket.</p>
+  <% } else { %>
+    <ul>
+      <% files.forEach(file => { %>
+        <li>
+          <strong><%= file %></strong>
+          <a href="/analyze?file=<%= encodeURIComponent(file) %>">🔍 Analyze</a>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+</body>
+</html>

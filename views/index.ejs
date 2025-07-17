@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upload Log File</title>
+</head>
+<body>
+  <h1>Upload a .log File</h1>
+  <a href="/files">📂 View Uploaded Files</a>
+
+  <form action="/upload" method="POST" enctype="multipart/form-data">
+    <input type="file" name="logfile" accept=".log" required />
+    <button type="submit">Upload</button>
+  </form>
+</body>
+</html>
