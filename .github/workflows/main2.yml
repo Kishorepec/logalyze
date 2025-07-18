@@ -35,7 +35,7 @@ jobs:
           # Build and restart Docker container
           docker stop jolly_shirley || true
           docker rm jolly_shirley || true
-          docker build -t log .
-          docker run -d --restart always -p 8080:3000 --env-file .env --name log log
+          docker build -t jolly_shirley .
+          docker run -d --restart always -p 8080:3000 --env-file .env --name jolly_shirley jolly_shirley
         EOF
 
