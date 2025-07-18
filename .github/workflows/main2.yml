@@ -33,8 +33,8 @@ jobs:
           git pull origin master
 
           # Build and restart Docker container
-          docker stop log || true
-          docker rm log || true
+          docker stop jolly_shirley || true
+          docker rm jolly_shirley || true
           docker build -t log .
           docker run -d --restart always -p 8080:3000 --env-file .env --name log log
         EOF
