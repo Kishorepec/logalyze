@@ -24,10 +24,7 @@ jobs:
           sudo su
           cd /home/ubuntu/log || mkdir /home/ubuntu/log && cd /home/ubuntu/log
 
-          # Clone the repo if not already present
-          if [ ! -d ".git" ]; then
-            git clone https://github.com/Kishorepec/logalyze.git .
-          fi
+          
 
           # Pull latest changes
           git pull origin master
