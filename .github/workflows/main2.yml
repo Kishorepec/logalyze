@@ -23,11 +23,9 @@ jobs:
         ssh -o StrictHostKeyChecking=no -i key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
           sudo su
           cd /home/ubuntu/log || mkdir /home/ubuntu/log && cd /home/ubuntu/log
+          cd /home/ubuntu/log/logalyze
 
-          # Clone the repo if not already present
-          if [ ! -d ".git" ]; then
-            git clone https://github.com/Kishorepec/logalyze.git .
-          fi
+          
 
           # Pull latest changes
           git pull origin master
