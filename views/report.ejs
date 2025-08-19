@@ -10,10 +10,10 @@
       padding: 2rem;
       background: #f4f4f4;
     }
-    h1, h2, h3 {
+    h1, h2 {
       color: #333;
     }
-    .log-section, .summary-section, .chat-section, .chart-section {
+    .section {
       background: white;
       border-radius: 8px;
       padding: 20px;
@@ -49,27 +49,27 @@
 
   <h1>Logalyze</h1>
 
-  <!-- 🔍 Summary and Insights -->
-  <div class="summary-section">
-    <h2>🧠 Summary & Insights</h2>
+  <!-- Summary Section -->
+  <div class="section">
+    <h2>Summary & Insights</h2>
     <p><%= summary || "Summary not available." %></p>
   </div>
 
-  <!-- 📊 Status Code Chart -->
-  <div class="chart-section">
-    <h2>📊 Status Code Breakdown</h2>
+  <!-- Status Code Chart -->
+  <div class="section">
+    <h2>Status Code Breakdown</h2>
     <canvas id="statusChart" height="200"></canvas>
   </div>
 
-  <!-- 📄 Raw Log Output -->
-  <div class="log-section">
-    <h2>📄 Raw Log Content</h2>
+  <!-- Raw Log Content -->
+  <div class="section">
+    <h2>Raw Log Content</h2>
     <pre><%= logText %></pre>
   </div>
 
-  <!-- 💬 AI Chat Assistant -->
-  <div class="chat-section">
-    <h2>💬 Ask About This Log</h2>
+  <!-- AI Assistant Chat -->
+  <div class="section">
+    <h2>Ask About This Log</h2>
     <div id="chat-box"></div>
     <form id="chat-form">
       <input type="text" id="user-query" placeholder="Ask a question..." required />
@@ -81,7 +81,7 @@
     const statusLabels = <%- JSON.stringify(statusLabels || []) %>;
     const statusCounts = <%- JSON.stringify(statusCounts || []) %>;
 
-
+    // Chart rendering
     const ctx = document.getElementById('statusChart').getContext('2d');
     new Chart(ctx, {
       type: 'pie',
@@ -91,16 +91,17 @@
           label: 'Status Code Count',
           data: statusCounts,
           backgroundColor: statusLabels.map((code) => {
-            if (code.startsWith('2')) return '#198754';
-            if (code.startsWith('3')) return '#0d6efd';
-            if (code.startsWith('4')) return '#ffc107';
-            if (code.startsWith('5')) return '#dc3545';
-            return '#6c757d';
+            if (code.startsWith('2')) return '#198754';  // Success
+            if (code.startsWith('3')) return '#0d6efd';  // Redirect
+            if (code.startsWith('4')) return '#ffc107';  // Client error
+            if (code.startsWith('5')) return '#dc3545';  // Server error
+            return '#6c757d'; // Others
           })
         }]
       }
     });
 
+    // Chat logic
     const chatForm = document.getElementById('chat-form');
     const chatBox = document.getElementById('chat-box');
 
